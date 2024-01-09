@@ -11,7 +11,7 @@ public abstract class ServiceImpl implements Service{
     static {
         String url = "jdbc:mysql://localhost:3306/bakerydb";
         String user = "root" ;
-        String password = "tiger";
+        String password = "sql123";
 
         try {
             conn = DriverManager.getConnection(url , user , password);

@@ -1,12 +1,8 @@
 package bakeryApplication;
-
 import DAO.CustomerService;
-import DAO.ServiceImpl;
 import DTO.Order;
 import DTO.Product;
 import DTO.User;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -24,6 +20,7 @@ public class CustomerMainApp {
         System.out.println("3. CANCEL ORDER ");
         System.out.println("4. DISPLAY ALL ORDERS ");
         System.out.println("5. SIGN OUT ");
+        System.out.println();
         int ch = sc.nextInt() ;
 
         switch (ch){
@@ -48,24 +45,16 @@ public class CustomerMainApp {
 
         main(user);
     }
-
-    private static void cancelOrder(User user) {
-        displayAllOrders(user);
-        System.out.println("SELECT ORDER ");
-        int ordId = sc.nextInt() ;
-        for (Product p :service.displayAllProduct(ordId))
-            System.out.println(p.getProductId() +"     "+ p.getProductName());
-    }
-
-
     private static void displayAllProducts() {
         List<Product> productList = service.displayAllProduct() ;
 
-        System.out.println("NAME  \t\t  PRICE ");
+        System.out.println("NAME  \t\t\t\t  PRICE ");
+        System.out.println("***********************************");
         for (Product p : productList)
         {
-            System.out.println(p.getProductName() +"\t  "+p.getProductPrice());
+            System.out.println(p.getProductName() +"\t\t\t "+p.getProductPrice());
         }
+        System.out.println("__________________________________________");
     }
 
     private static void placeOrder(User user) {
@@ -90,14 +79,21 @@ public class CustomerMainApp {
         boolean status = false;
         try {
             status = service.placeOrder(ord);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
         if (status)
             System.out.println("ORDER PLACED !!");
         else
             System.out.println("ORDER NOT PLACED !!");
 
+    }
+    private static void cancelOrder(User user) {
+        displayAllOrders(user);
+        System.out.println("SELECT ORDER ");
+        int ordId = sc.nextInt() ;
+        for (Product p :service.displayAllProduct(ordId))
+            System.out.println(p.getProductId() +"     "+ p.getProductName());
     }
 
     private static void displayAllOrders(User user) {
